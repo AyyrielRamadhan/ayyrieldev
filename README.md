@@ -10,7 +10,7 @@ Saya merupakan mahasiswa Informatika di **Universitas Teknologi Digital Indonesi
 
 - 🏫 **Pendidikan:** Sedang menempuh program studi Informatika di Universitas Teknologi Digital Indonesia.
 - 💻 **Fokus Belajar:** HTML, CSS, JavaScript, PHP, MySQL, UI Design, dan Version Control (Git/GitHub).
-- ✉️ **Hubungi Saya:** [ayyriel@example.com](mailto:ayyriel@example.com)
+- ✉️ **Hubungi Saya:** [nanangnurcahyo89@gmail.com](mailto:nanangnurcahyo89@gmail.com)
 - 🌐 **Website Portfolio:** [ayyrieldev.github.io](https://ayyrieldev.github.io/)
 
 ---
