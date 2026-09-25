@@ -10,6 +10,12 @@ $totalProjects = table_count('projects');
 $totalCertificates = table_count('certificates');
 ?>
 
+<div class="intro-loader" data-intro aria-hidden="true">
+  <div class="intro-mark">MR</div>
+  <p class="intro-label">Memuat Portofolio</p>
+  <div class="intro-track"><span></span></div>
+</div>
+
 <main>
   <section class="hero-section">
     <div class="hero-bg" aria-hidden="true"></div>
@@ -22,7 +28,7 @@ $totalCertificates = table_count('certificates');
           <span class="badge">PHP &amp; Database</span>
         </div>
         <p class="eyebrow">Portofolio Mahasiswa Informatika</p>
-        <h1>Halo, saya Muhammad Rezky Ayyriel Ramadhan.</h1>
+        <h1>Halo, saya <span class="type-target" data-typing><?= h($profile['nama']); ?>.</span><span class="type-caret" aria-hidden="true"></span></h1>
         <p class="hero-subtitle">
           Saya adalah mahasiswa Informatika yang berfokus pada pengembangan
           website, front-end development, PHP, dan database.
