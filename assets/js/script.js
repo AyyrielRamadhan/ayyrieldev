@@ -131,6 +131,8 @@
     const typingTarget = document.querySelector('[data-typing]');
     const intro = document.querySelector('[data-intro]');
     const fullTypingText = typingTarget ? typingTarget.textContent.trim().toUpperCase() : '';
+    const INTRO_DURATION = 8000;
+    const TYPING_INTERVAL = 150;
     let typingStarted = false;
 
     function prepareTyping() {
@@ -162,7 +164,7 @@
                 window.clearInterval(timer);
                 typingTarget.classList.remove('is-typing');
             }
-        }, 62);
+        }, TYPING_INTERVAL);
     }
 
     function runIntro() {
@@ -181,8 +183,21 @@
         prepareTyping();
         body.classList.add('intro-open');
 
+        const percentTarget = intro.querySelector('[data-intro-percent]');
+        const progressFill = intro.querySelector('.intro-track span');
         const startedAt = Date.now();
         let finished = false;
+        let pageLoaded = document.readyState === 'complete';
+
+        if (progressFill) {
+            progressFill.style.animation = 'none';
+        }
+
+        if (!pageLoaded) {
+            window.addEventListener('load', () => {
+                pageLoaded = true;
+            }, { once: true });
+        }
 
         function finishIntro() {
             if (finished) {
@@ -190,6 +205,12 @@
             }
 
             finished = true;
+            if (percentTarget) {
+                percentTarget.textContent = '100%';
+            }
+            if (progressFill) {
+                progressFill.style.width = '100%';
+            }
             intro.classList.add('is-done');
             body.classList.remove('intro-open');
             startTyping();
@@ -200,18 +221,32 @@
             }, 600);
         }
 
-        function scheduleIntroEnd() {
+        function tick() {
+            if (finished) {
+                return;
+            }
+
             const elapsed = Date.now() - startedAt;
-            window.setTimeout(finishIntro, Math.max(0, 1250 - elapsed));
+            const progress = Math.min(1, elapsed / INTRO_DURATION);
+            const display = progress >= 1 && !pageLoaded ? 0.99 : progress;
+
+            if (percentTarget) {
+                percentTarget.textContent = `${Math.round(display * 100)}%`;
+            }
+            if (progressFill) {
+                progressFill.style.width = `${display * 100}%`;
+            }
+
+            if (progress >= 1 && pageLoaded) {
+                finishIntro();
+                return;
+            }
+
+            window.requestAnimationFrame(tick);
         }
 
-        if (document.readyState === 'complete') {
-            scheduleIntroEnd();
-        } else {
-            window.addEventListener('load', scheduleIntroEnd, { once: true });
-        }
-
-        window.setTimeout(finishIntro, 1900);
+        window.requestAnimationFrame(tick);
+        window.setTimeout(finishIntro, 10000);
     }
 
     runIntro();
